@@ -72,8 +72,7 @@ run:
 # The same checks CI runs on every PR.
 ci: quality-full test build
 
-# Cut a stable release. Pass --dry-run to preview without tagging.
-# Pipe `y` to skip the interactive confirmation: `echo y | just release`.
+# Cut a stable release. Pass --dry-run to preview; pipe `y` to skip the interactive confirmation.
 release *args: quality-full test build
     ./scripts/release.sh release {{args}}
 
