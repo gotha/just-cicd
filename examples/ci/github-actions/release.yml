@@ -1,0 +1,86 @@
+# Release workflow.
+#
+# Triggered by tags pushed by `just release` and `just release-candidate`.
+# Tags matching `v*-rc*` publish to a staging channel; tags matching `v*`
+# (without a `-rc` suffix) publish to the stable channel.
+#
+# The workflow only does plumbing (checkout, toolchains, secrets, push).
+# Everything else is a `just` recipe so the same actions work locally.
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    name: just ci + just publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    env:
+      CI: "true"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install just
+        uses: extractions/setup-just@v2
+
+      # Replace with the toolchain your project uses.
+      - name: Install Python toolchain
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            ~/.cargo
+            ~/go/pkg/mod
+            node_modules
+          key: ${{ runner.os }}-just-setup-${{ hashFiles('**/uv.lock', '**/Cargo.lock', '**/pnpm-lock.yaml', '**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-just-setup-
+
+      - name: Install project dependencies
+        run: just setup
+
+      - name: Run CI checks (quality-full + test + build)
+        run: just ci
+
+      - name: Determine release channel from tag
+        id: channel
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == *-rc* ]]; then
+              echo "channel=staging" >> "$GITHUB_OUTPUT"
+          else
+              echo "channel=stable" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Log in to container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish artifacts
+        run: just publish
+        env:
+          RELEASE_CHANNEL: ${{ steps.channel.outputs.channel }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          prerelease: ${{ steps.channel.outputs.channel == 'staging' }}
