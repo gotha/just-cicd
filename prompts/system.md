@@ -87,5 +87,5 @@ changes that are not in the checklist or in `knowledge/05-conventions.md`.
 
 When proposing a new `Justfile`, start from the closest example in
 `examples/justfiles/` (Python, Go, Node) and adapt it. When proposing a
-CI workflow, start from `examples/ci/github-actions/` and translate
-only the plumbing for other providers.
+CI workflow, follow the patterns in `knowledge/07-cicd-integration.md`:
+the YAML is plumbing only, every meaningful step is `just <recipe>`.

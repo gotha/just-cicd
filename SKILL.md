@@ -49,8 +49,6 @@ Activate this skill when the user:
 | `examples/justfiles/python-uv.justfile` | Reference Justfile for a Python project using `uv` |
 | `examples/justfiles/go.justfile` | Reference Justfile for a Go project |
 | `examples/justfiles/nodejs-pnpm.justfile` | Reference Justfile for a Node.js project using `pnpm` |
-| `examples/ci/github-actions/pr.yml` | PR validation workflow (quality + test + build) |
-| `examples/ci/github-actions/release.yml` | Release workflow triggered by `v*` tags |
 
 ## Core contract (the one-paragraph version)
 
@@ -77,7 +75,8 @@ underlying technology is actually used.
 3. **Designing a CI/CD pipeline.** Read
    `knowledge/07-cicd-integration.md`. The pipeline YAML is a thin
    orchestrator that calls `just <recipe>`; logic lives in the
-   `Justfile`, not in the YAML.
+   `Justfile`, not in the YAML. Translate the recipe calls and the
+   trigger contract to whichever CI provider the project uses.
 
 4. **Adding optional sections.** Only when the underlying technology is
    actually used. See `knowledge/04-optional-sections.md` for the

@@ -68,8 +68,7 @@ just-cicd/
 │   ├── 07-cicd-integration.md
 │   └── 08-compliance-checklist.md
 ├── examples/
-│   ├── justfiles/        # Reference Justfiles per language
-│   └── ci/               # Reference CI/CD workflows
+│   └── justfiles/        # Reference Justfiles per language
 └── flake.nix             # Optional Nix dev shell for working on the skill
 ```
 
@@ -102,9 +101,8 @@ of the spec it is reasoning about.
 
 ### Adding examples
 
-Add language-specific reference `Justfile`s to `examples/justfiles/` and
-CI workflow templates to `examples/ci/<provider>/`. New examples MUST
-satisfy the compliance checklist in
+Add language-specific reference `Justfile`s to `examples/justfiles/`.
+New examples MUST satisfy the compliance checklist in
 `knowledge/08-compliance-checklist.md`.
 
 ## License

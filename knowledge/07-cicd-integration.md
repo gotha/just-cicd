@@ -95,8 +95,9 @@ adoption path:
 
 1. Get the project to spec compliance locally (run `just ci`
    successfully).
-2. Wire one provider (e.g. GitHub Actions) using the examples in
-   `examples/ci/github-actions/`.
+2. Wire the project's CI provider so that every meaningful step is a
+   `just <recipe>` invocation; keep YAML to plumbing only (checkout,
+   toolchain install, cache, secrets).
 3. Add additional providers by translating only the YAML; the recipe
    calls stay identical.
 
