@@ -95,3 +95,14 @@ push the resulting git tag.
 A recipe that asks for interactive confirmation (typical for `release`)
 MUST be runnable non-interactively by piping the answer to stdin, and
 the expected answer MUST be documented in the recipe's comment.
+
+A reference implementation of the underlying script lives at
+`examples/scripts/release.sh`. It demonstrates the moving parts a
+spec-conformant release needs — discovering the latest stable tag,
+classifying conventional-commit messages into a major/minor/patch
+bump, computing the next version, and pushing the resulting git tag
+(plus an optional matching Docker tag). It is a starting point, not a
+drop-in: adopting projects are expected to copy it into their own
+`scripts/` directory and tailor the project name, the registry, the
+artifact-tagging steps, and the `--dry-run` argument handling to match
+the recipe contract above.

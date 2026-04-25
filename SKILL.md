@@ -49,6 +49,7 @@ Activate this skill when the user:
 | `examples/justfiles/python-uv.justfile` | Reference Justfile for a Python project using `uv` |
 | `examples/justfiles/go.justfile` | Reference Justfile for a Go project |
 | `examples/justfiles/nodejs-pnpm.justfile` | Reference Justfile for a Node.js project using `pnpm` |
+| `examples/scripts/release.sh` | Starting-point release script (conventional-commits → semver, git tag, optional docker tag). Copy and tailor per project. |
 
 ## Core contract (the one-paragraph version)
 

@@ -129,7 +129,8 @@ just-cicd/
 │   ├── 07-cicd-integration.md
 │   └── 08-compliance-checklist.md
 ├── examples/
-│   └── justfiles/        # Reference Justfiles per language
+│   ├── justfiles/        # Reference Justfiles per language
+│   └── scripts/          # Reference helper scripts (e.g. release.sh)
 └── flake.nix             # Optional Nix dev shell for working on the skill
 ```
 
@@ -165,6 +166,11 @@ of the spec it is reasoning about.
 Add language-specific reference `Justfile`s to `examples/justfiles/`.
 New examples MUST satisfy the compliance checklist in
 `knowledge/08-compliance-checklist.md`.
+
+Helper scripts that recipes call into (release automation, deployment
+helpers, etc.) live under `examples/scripts/`. They are starting
+points: each adopting project is expected to copy and tailor them to
+its own naming, registry, and tagging conventions.
 
 ## License
 

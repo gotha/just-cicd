@@ -89,3 +89,6 @@ When proposing a new `Justfile`, start from the closest example in
 `examples/justfiles/` (Python, Go, Node) and adapt it. When proposing a
 CI workflow, follow the patterns in `knowledge/07-cicd-integration.md`:
 the YAML is plumbing only, every meaningful step is `just <recipe>`.
+When proposing a release script, start from
+`examples/scripts/release.sh` and adapt it to the project's naming,
+registry, and the `--dry-run` argument-forwarding contract.
