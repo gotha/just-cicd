@@ -21,8 +21,9 @@ A `Justfile` follows this spec when:
       (`echo y | just release`) and the expected answer is documented
       in the recipe comment.
 - [ ] `build` produces the artifact but does NOT publish or push.
-- [ ] If the project has a CI pipeline, a `ci` recipe exists that
-      mirrors what CI runs on every PR.
+- [ ] The `Justfile` does NOT bundle pipeline steps into a single
+      composite "run everything CI runs" recipe. Each phase is a
+      separately runnable recipe; the CI/CD layer orchestrates them.
 
 ## How to use this checklist
 

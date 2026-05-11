@@ -56,8 +56,13 @@ just release
 
 ### Reproducing CI locally
 
+The CI/CD pipeline calls the spec's recipes one by one. To reproduce
+the same sequence locally, run them in the same order:
+
 ```bash
-just ci
+just quality-full
+just test
+just build
 ```
 
 ## Why this shape

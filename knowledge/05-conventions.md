@@ -65,8 +65,8 @@ Each recipe SHOULD have a one-line comment immediately above it
 describing what it does. The comment is what `just --list` shows.
 
 ```just
-# Run all checks CI runs on PRs (quality-full + test + build).
-ci: quality-full test build
+# Run static checks and the full test suite.
+quality: format lint typecheck
 ```
 
 ## Forwarding arguments

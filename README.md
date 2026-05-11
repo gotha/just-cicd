@@ -38,7 +38,7 @@ project, regardless of language, exposes the same vocabulary:
 ```
 just setup       just lint        just test        just release
 just build       just lint-fix    just run         just release-candidate
-                 just typecheck   just ci          just release --dry-run
+                 just typecheck                    just release --dry-run
 ```
 
 A developer (or an AI agent) moving between a Python service, a Go
@@ -47,10 +47,13 @@ things. The internals differ; the interface does not.
 
 ### How CI/CD fits in
 
-Because every meaningful action is already a recipe, CI/CD pipelines
-become thin orchestrators. The pipeline YAML handles plumbing only —
-checkout, toolchain install, caching, secrets — and every step that
-matters is `just <recipe>`. This yields three concrete properties:
+The `Justfile` exposes the individual phases of the SDLC; the CI/CD
+pipeline orchestrates them. The pipeline YAML decides which recipes to
+call on which trigger and in what order, and handles plumbing only —
+checkout, toolchain install, caching, secrets. Every step that matters
+is `just <recipe>`; there is deliberately no all-in-one composite
+recipe, because composition is the pipeline's responsibility. This
+yields three concrete properties:
 
 1. **Local/CI parity.** Any failure in CI can be reproduced locally
    by running the same `just` command. There is no
