@@ -21,17 +21,29 @@ expose separately when the project uses distinct format and lint tools
 Static type analysis (`mypy`, `tsc --noEmit`, `go vet`, `cargo check`,
 `flow check`, …). Required for typed languages; omitted otherwise.
 
-## `quality`, `quality-quick`, `quality-full`
+## `quality`
 
-Composite recipes that group the checks above:
+A single composite recipe that groups every code-quality check the
+project runs: `format` + `lint` + `typecheck` plus any slower static
+analysis the project relies on (dead-code detection, import-graph
+linting, security scanners, dependency audits, …).
 
-- `quality-quick` — `format` + `lint`
-- `quality` — `format` + `lint` + `typecheck`
-- `quality-full` — `quality` + dead-code detection + any slower static
-  analysis (e.g. import-graph linting, security scanners)
+```just
+# Run every code-quality check.
+quality: format lint typecheck
+    # …project-specific slower analyses go here…
+```
 
-These exist for ergonomics; everything they do is also reachable via
-the single-purpose recipes.
+`quality` is the single quality gate. Everything it runs is also
+reachable via the single-purpose recipes (`format`, `lint`,
+`typecheck`); `quality` exists so the pipeline and developers have one
+recipe to call for "all static checks".
+
+The spec deliberately does NOT split this into fast/slow tiers
+(`quality-quick`, `quality-full`). If a project wants a faster inner
+loop, the developer runs `just lint` or `just typecheck` directly;
+splitting `quality` itself creates ambiguity about which tier the
+release gate depends on.
 
 ## Test variants
 

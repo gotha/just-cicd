@@ -40,10 +40,10 @@ step:
 
 | Trigger | Pipeline behavior |
 |---|---|
-| Pull request | `just quality-full` → `just test` → `just build` |
-| Push to `main` | `just quality-full` → `just test` → `just build` (canary, no publish) |
-| Tag matching `v*-rc*` | `just quality-full` → `just test` → `just build` → `just publish` to staging channel |
-| Tag matching `v*` (no suffix) | `just quality-full` → `just test` → `just build` → `just publish` to stable channel |
+| Pull request | `just quality` → `just test` → `just build` |
+| Push to `main` | `just quality` → `just test` → `just build` (canary, no publish) |
+| Tag matching `v*-rc*` | `just quality` → `just test` → `just build` → `just publish` to staging channel |
+| Tag matching `v*` (no suffix) | `just quality` → `just test` → `just build` → `just publish` to stable channel |
 
 ## Caching strategy
 

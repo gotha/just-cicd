@@ -1,12 +1,10 @@
 # Required recipe-dependency graph
 
 ```
-release [--dry-run]           ──► quality (or quality-full) ──► test ──► build [──► build-docker]
-release-candidate [--dry-run] ──► quality (or quality-full) ──► test ──► build [──► build-docker]
+release [--dry-run]           ──► quality ──► test ──► build [──► build-docker]
+release-candidate [--dry-run] ──► quality ──► test ──► build [──► build-docker]
 
-quality       ──► format ──► lint ──► typecheck
-quality-quick ──► format ──► lint
-quality-full  ──► quality ──► find-unused [──► other slow analyses]
+quality ──► format ──► lint ──► typecheck [──► slower static analyses]
 ```
 
 `--dry-run` does not change the dependency chain; quality and tests
@@ -60,7 +58,7 @@ The CI/CD pipeline calls the spec's recipes one by one. To reproduce
 the same sequence locally, run them in the same order:
 
 ```bash
-just quality-full
+just quality
 just test
 just build
 ```

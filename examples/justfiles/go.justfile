@@ -33,14 +33,8 @@ lint:
 typecheck:
     go vet ./...
 
-# Format + lint + typecheck.
+# Run every code-quality check: format, lint, typecheck, staticcheck.
 quality: format lint typecheck
-
-# format + lint only (fast).
-quality-quick: format lint
-
-# quality + dead-code detection.
-quality-full: quality
     go install honnef.co/go/tools/cmd/staticcheck@latest
     staticcheck ./...
 
@@ -71,11 +65,11 @@ run: build
     {{binary}}
 
 # Cut a stable release. Pass --dry-run to preview; pipe `y` to skip the interactive confirmation.
-release *args: quality-full test build
+release *args: quality test build
     ./scripts/release.sh release {{args}}
 
 # Cut a release candidate. Pass --dry-run to preview without tagging.
-release-candidate *args: quality-full test build
+release-candidate *args: quality test build
     ./scripts/release.sh release-candidate {{args}}
 
 # Push the container image to its registry.

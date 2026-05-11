@@ -31,14 +31,8 @@ lint:
 typecheck:
     pnpm exec tsc --noEmit
 
-# Format + lint + typecheck.
+# Run every code-quality check: format, lint, typecheck, dependency audit.
 quality: format lint typecheck
-
-# format + lint only (fast).
-quality-quick: format lint
-
-# quality + extra static analysis.
-quality-full: quality
     pnpm audit --prod
 
 # Run the entire test suite. Exits non-zero on any failure.
@@ -70,11 +64,11 @@ run:
     pnpm dev
 
 # Cut a stable release. Pass --dry-run to preview; pipe `y` to skip the interactive confirmation.
-release *args: quality-full test build
+release *args: quality test build
     ./scripts/release.sh release {{args}}
 
 # Cut a release candidate. Pass --dry-run to preview without tagging.
-release-candidate *args: quality-full test build
+release-candidate *args: quality test build
     ./scripts/release.sh release-candidate {{args}}
 
 # Publish the package to npm.

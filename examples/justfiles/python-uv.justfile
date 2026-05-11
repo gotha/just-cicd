@@ -31,14 +31,8 @@ lint:
 typecheck:
     uv run mypy src/
 
-# Format + lint + typecheck.
+# Run every code-quality check: format, lint, typecheck, dead-code detection.
 quality: format lint typecheck
-
-# format + lint only (fast).
-quality-quick: format lint
-
-# quality + dead-code detection.
-quality-full: quality
     uv run vulture src/ --min-confidence 80
 
 # Run the entire test suite. Exits non-zero on any failure.
@@ -70,11 +64,11 @@ run:
     uv run uvicorn src.main:app --reload --host 127.0.0.1 --port 8000
 
 # Cut a stable release. Pass --dry-run to preview; pipe `y` to skip the interactive confirmation.
-release *args: quality-full test build
+release *args: quality test build
     ./scripts/release.sh release {{args}}
 
 # Cut a release candidate. Pass --dry-run to preview without tagging.
-release-candidate *args: quality-full test build
+release-candidate *args: quality test build
     ./scripts/release.sh release-candidate {{args}}
 
 # Push the most recently built artifacts to their registry.
